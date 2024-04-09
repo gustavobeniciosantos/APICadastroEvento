@@ -14,8 +14,8 @@ POST http://localhost:3333/events/f7912d2f-2fc7-419f-9db1-c7d229b40a1a/attendees
 Content-Type: application/json
 
 {
-    "name": "Gustavo",
-    "email": "gustavo@gmail.com"
+    "name": "Junker",
+    "email": "junker@gmail.com"
 }
 
 ####
@@ -27,3 +27,13 @@ GET http://localhost:3333/events/f7912d2f-2fc7-419f-9db1-c7d229b40a1a
 ########
 
 GET http://localhost:3333/attendees/3/badge
+
+
+########
+
+GET http://localhost:3333/attendees/3/check-in
+
+
+########
+
+GET http://localhost:3333/events/f7912d2f-2fc7-419f-9db1-c7d229b40a1a/attendees?query=Gustavo

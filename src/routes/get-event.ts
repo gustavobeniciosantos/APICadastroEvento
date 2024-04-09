@@ -12,16 +12,16 @@ export async function getEvent(app: FastifyInstance) {
                     eventId: z.string().uuid(),
                 }),
                 response: {
-                    200: {
+                    200: z.object({
                         event: z.object({
                             id: z.string().uuid(),
                             title: z.string(),
                             slug: z.string(),
-                            detais: z.string().nullable(),
+                            details: z.string().nullable(),
                             maximumAttendees: z.number().int().nullable(),
                             attendeesAmount: z.number().int(),
                         })
-                    }
+                    })
                 }
             }
         }, async (request, reply) => {
@@ -56,9 +56,9 @@ export async function getEvent(app: FastifyInstance) {
                     id: event.id,
                     title: event.title,
                     slug: event.slug,
-                    detais: event.details,
+                    details: event.details,
                     maximumAttendees: event.maximumAttendees,
-                    attendeesAmount: event._count
+                    attendeesAmount: event._count.attendees
                 }
             })
         })
