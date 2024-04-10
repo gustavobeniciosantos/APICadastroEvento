@@ -3,6 +3,7 @@ import { z } from 'zod';//verificador de dados
 import { generateSlug } from "../utils/generate-slugs";
 import { prisma } from '../lib/prisma';
 import { FastifyInstance } from 'fastify';
+import { BadRequest } from './_errors/bad-request';
 
 export async function createEvent(app: FastifyInstance) { //Aqui eu exporto o create event parao server com a lógica do post
     app.withTypeProvider<ZodTypeProvider>()
@@ -10,7 +11,7 @@ export async function createEvent(app: FastifyInstance) { //Aqui eu exporto o cr
             schema: {
                 body:
                     z.object({
-                        title: z.string().min(4),
+                        title: z.string({invalid_type_error: 'O título precisa ser um texto'}).min(4),
                         details: z.string().nullable(),
                         maximumAttendees: z.number().int().positive().nullable(),
                     }),//faz a validação de cada item do BD
@@ -36,7 +37,7 @@ export async function createEvent(app: FastifyInstance) { //Aqui eu exporto o cr
             })//verifica se já existe o mesmo slug no BD
 
             if (eventWithSameSlug !== null) {
-                throw new Error("Another event with same title already exist")
+                throw new BadRequest("Another event with same title already exist")
             }//Caso exista (não for nulo), aparecerá esse erro no resp Json
 
 
